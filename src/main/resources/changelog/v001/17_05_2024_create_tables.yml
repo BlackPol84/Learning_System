@@ -1,0 +1,160 @@
+databaseChangeLog:
+  - changeSet:
+      id: dev-1
+      author: pol84
+      changes:
+        - createTable:
+            tableName: teachers
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: firstname
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lastname
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: courses
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: teacher_id
+                  type: integer
+                  constraints:
+                    nullable: false
+                    foreignKey:
+                      constraintName: fk_teacher_id
+                      references: teachers(id)
+            constraints:
+              -uniqueConstraint:
+                constraintName: unique_title_teacher_id
+                columnNames: title, teacher_id
+        - createTable:
+            tableName: groups
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: course_id
+                  type: integer
+                  constraints:
+                    nullable: false
+                    foreignKey:
+                      constraintName: fk_course_id
+                      references: courses(id)
+            constraints:
+              -uniqueConstraint:
+                constraintName: unique_name_course_id
+                columnNames: name, course_id
+        - createTable:
+            tableName: students
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: firstname
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lastname
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: integer
+                  constraints:
+                    nullable: false
+                    foreignKey:
+                      constraintName: fk_group_id
+                      references: groups(id)
+            constraints:
+              -uniqueConstraint:
+                constraintName: unique_firstname_lastname_group_id
+                columnNames: firstname, lastname, group_id
+        - createTable:
+            tableName: schedule
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: integer
+                  constraints:
+                    nullable: false
+                    foreignKey:
+                      constraintName: fk_schedule_group_id
+                      references: groups(id)
+              - column:
+                  name: teacher_id
+                  type: integer
+                  constraints:
+                    nullable: false
+                    foreignKey:
+                      constraintName: fk_schedule_teacher_id
+                      references: teachers(id)
+              - column:
+                  name: course_id
+                  type: integer
+                  constraints:
+                    nullable: false
+                    foreignKey:
+                      constraintName: fk_schedule_course_id
+                      references: courses(id)
+              - column:
+                  name: start_date
+                  type: timestamp without time zone
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_date
+                  type: timestamp without time zone
+                  constraints:
+                    nullable: false

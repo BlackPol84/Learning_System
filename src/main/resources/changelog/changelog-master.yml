@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: changelog/v001/17_05_2024_create_tables.yml
+  - include:
+      file: changelog/v001/31_05_2024_changing_group_tables.yml

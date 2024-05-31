@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/Learning_System_DB
+    username: postgres
+    password: 848712
+
+  thymeleaf:
+    prefix: /WEB-INF/views/
+    suffix: .html
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  liquibase:
+    change-log: changelog/changelog-master.yml
+
+app:
+  repository:
+    type: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
+

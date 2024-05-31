@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: dev-2
+      author: pol84
+      changes:
+        - addUniqueConstraint:
+            constraintName: unique_name
+            tableName: groups
+            columnNames: name
