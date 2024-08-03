@@ -41,7 +41,7 @@ public class StudentRepositoryJdbc implements StudentRepository {
     }
 
     public void update(Student student) {
-        jdbcTemplate.update("UPDATE students SET firstName = ?, lastName = ?, group_id = ?) " +
+        jdbcTemplate.update("UPDATE students SET firstName = ?, lastName = ?, group_id = ? " +
                 "WHERE id = ?", student.getFirstName(), student.getLastName(),
                 student.getGroup().getId(), student.getId());
     }

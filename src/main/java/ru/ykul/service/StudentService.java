@@ -13,6 +13,7 @@ import ru.ykul.repository.GroupRepository;
 import ru.ykul.repository.StudentRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -52,19 +53,24 @@ public class StudentService {
 
     @Transactional
     public StudentDto update(StudentDto studentDto) {
-        Student student = mapperDto.toStudent(studentDto);
+        Student updatedstudent = mapperDto.toStudent(studentDto);
 
-        Group group = groupRepository.getById(student.getGroup().getId()).
-                orElseThrow(() -> new GroupNotFoundException(student.getGroup().getId()));;
-        student.setGroup(group);
-        studentRepository.update(student);
+        Student student = studentRepository.getById(updatedstudent.getId())
+                .orElseThrow(() -> new StudentNotFoundException(updatedstudent.getId()));
 
-        Student studentUpdate = studentRepository.getById(student.getId()).
-                orElseThrow(() -> new StudentNotFoundException(student.getId()));
+            Group group = groupRepository.getById(student.getGroup().getId()).
+                    orElseThrow(() -> new GroupNotFoundException(student.getGroup().getId()));
 
-        return mapperDto.toDto(studentUpdate);
+            student.setGroup(group);
+            student.setFirstName(updatedstudent.getFirstName());
+            student.setLastName(updatedstudent.getLastName());
+
+            studentRepository.update(student);
+
+        return mapperDto.toDto(student);
     }
 
+    @Transactional
     public void delete(int id) {
         Student student = studentRepository.getById(id).
                 orElseThrow(() -> new StudentNotFoundException(id));

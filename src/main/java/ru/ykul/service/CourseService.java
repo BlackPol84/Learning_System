@@ -54,17 +54,23 @@ public class CourseService {
         return mapperDto.toDto(course);
     }
 
+    @Transactional
     public CourseDto update(CourseDto courseDto) {
-        Course course = mapperDto.toCourse(courseDto);
+        Course updatedCourse = mapperDto.toCourse(courseDto);
+
+        Course course = courseRepository.getById(updatedCourse.getId())
+                .orElseThrow(() -> new CourseNotFoundException(updatedCourse.getId()));
+
         Teacher teacher = teacherRepository.getById(course.getTeacher().getId()).
                 orElseThrow(() -> new TeacherNotFoundException(course.getTeacher().getId()));
+
         course.setTeacher(teacher);
+        course.setTitle(updatedCourse.getTitle());
+        course.setDescription(updatedCourse.getDescription());
+
         courseRepository.update(course);
 
-        Course courseUpdate = courseRepository.getById(course.getId()).
-                orElseThrow(() -> new CourseNotFoundException(course.getId()));
-
-        return mapperDto.toDto(courseUpdate);
+        return mapperDto.toDto(course);
     }
 
     @Transactional

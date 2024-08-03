@@ -1,13 +1,9 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/Learning_System_DB
-    username: postgres
-    password: 848712
-
-  thymeleaf:
-    prefix: /WEB-INF/views/
-    suffix: .html
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/Learning_System_DB}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:848712}
 
   mvc:
     hiddenmethod:
@@ -25,7 +21,7 @@ spring:
 
 app:
   repository:
-    type: true
+    type: false
 
 logging:
   level:

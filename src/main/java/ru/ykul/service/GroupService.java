@@ -57,16 +57,20 @@ public class GroupService {
 
     @Transactional
     public GroupDto update(GroupDto groupDto) {
-        Group group = mapperDto.toGroup(groupDto);
+        Group updatedGroup = mapperDto.toGroup(groupDto);
+
+        Group group = groupRepository.getById(updatedGroup.getId())
+                .orElseThrow(() -> new GroupNotFoundException(updatedGroup.getId()));
+
         Course course = courseRepository.getById(group.getCourse().getId()).
                 orElseThrow(() -> new CourseNotFoundException(group.getCourse().getId()));
+
         group.setCourse(course);
+        group.setName(updatedGroup.getName());
+
         groupRepository.update(group);
 
-        Group groupUpdate = groupRepository.getById(group.getId()).
-                orElseThrow(() -> new GroupNotFoundException(group.getId()));
-
-        return mapperDto.toDto(groupUpdate);
+        return mapperDto.toDto(group);
     }
 
     @Transactional

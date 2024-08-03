@@ -44,14 +44,18 @@ public class TeacherService {
         return mapperDto.toDto(teacher);
     }
 
+    @Transactional
     public TeacherDto update(TeacherDto teacherDto) {
-        Teacher teacher = mapperDto.toTeacher(teacherDto);
+        Teacher updatedTeacher = mapperDto.toTeacher(teacherDto);
+
+        Teacher teacher = teacherRepository.getById(updatedTeacher.getId())
+                .orElseThrow(() -> new TeacherNotFoundException(updatedTeacher.getId()));
+
+        teacher.setFirstName(updatedTeacher.getFirstName());
+        teacher.setLastName(updatedTeacher.getLastName());
         teacherRepository.update(teacher);
 
-        Teacher teacherUpdate = teacherRepository.getById(teacher.getId()).
-                orElseThrow(() -> new TeacherNotFoundException(teacher.getId()));
-
-        return mapperDto.toDto(teacherUpdate);
+        return mapperDto.toDto(teacher);
     }
 
     @Transactional

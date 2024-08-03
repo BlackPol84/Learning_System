@@ -10,7 +10,6 @@ import ru.ykul.repository.TeacherRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -42,6 +41,7 @@ public class TeacherRepositoryJdbc implements TeacherRepository {
     }
 
     public void delete(Teacher teacher) {
-        jdbcTemplate.update("DELETE FROM teachers WHERE id = ?", teacher.getId());
+        jdbcTemplate.update("DELETE FROM teachers WHERE id = ?",
+                teacher.getId());
     }
 }

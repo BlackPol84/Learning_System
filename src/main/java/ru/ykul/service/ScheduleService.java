@@ -72,33 +72,36 @@ public class ScheduleService {
     @Transactional
     public ScheduleDto update(ScheduleDto scheduleDto) {
 
-        Schedule schedule = mapperDto.toSchedule(scheduleDto);
+        Schedule updatedSchedule = mapperDto.toSchedule(scheduleDto);
 
-        Group group = groupRepository.getById(schedule.getGroup().getId()).
-                orElseThrow(() -> new GroupNotFoundException(schedule.getGroup().getId()));
-        Course course = courseRepository.getById(schedule.getCourse().getId()).
-                orElseThrow(() -> new CourseNotFoundException(schedule.getCourse().getId()));
-        Teacher teacher = teacherRepository.getById(schedule.getTeacher().getId()).
-                orElseThrow(() -> new TeacherNotFoundException(schedule.getTeacher().getId()));
+        Schedule schedule = scheduleRepository.getById(updatedSchedule.getId())
+                .orElseThrow(() -> new ScheduleNotFoundException(updatedSchedule.getId()));
 
-        validation(group, course, teacher, schedule);
+        Group group = groupRepository.getById(updatedSchedule.getGroup().getId()).
+                orElseThrow(() -> new GroupNotFoundException(updatedSchedule.getGroup().getId()));
+        Course course = courseRepository.getById(updatedSchedule.getCourse().getId()).
+                orElseThrow(() -> new CourseNotFoundException(updatedSchedule.getCourse().getId()));
+        Teacher teacher = teacherRepository.getById(updatedSchedule.getTeacher().getId()).
+                orElseThrow(() -> new TeacherNotFoundException(updatedSchedule.getTeacher().getId()));
+
+        validation(group, course, teacher, updatedSchedule);
 
         schedule.setGroup(group);
         schedule.setCourse(course);
         schedule.setTeacher(teacher);
+        schedule.setStartDate(updatedSchedule.getStartDate());
+        schedule.setEndDate(updatedSchedule.getEndDate());
 
-        boolean scheduleExists = scheduleRepository.isExists(schedule);
         boolean scheduleExistsEndDate = scheduleRepository.isExistsEndDate(schedule);
-        if(!scheduleExists && !scheduleExistsEndDate) {
+
+        if(!scheduleExistsEndDate) {
             scheduleRepository.update(schedule);
         }
 
-        Schedule scheduleUpdate = scheduleRepository.getById(schedule.getId()).
-                orElseThrow(() -> new ScheduleNotFoundException(schedule.getId()));
-
-        return mapperDto.toDto(scheduleUpdate);
+        return mapperDto.toDto(schedule);
     }
 
+    @Transactional
     public void delete(int id) {
         Schedule schedule = scheduleRepository.getById(id).
                 orElseThrow(() -> new ScheduleNotFoundException(id));
