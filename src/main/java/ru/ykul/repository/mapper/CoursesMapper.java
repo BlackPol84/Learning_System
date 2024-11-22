@@ -24,6 +24,7 @@ public class CoursesMapper implements RowMapper<Course> {
             teacher.setId(rs.getInt("teacher_id"));
             teacher.setFirstName(rs.getString("firstname"));
             teacher.setLastName(rs.getString("lastname"));
+            teacher.setEmail(rs.getString("email"));
 
             course.setTeacher(teacher);
         }

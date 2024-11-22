@@ -9,7 +9,7 @@ import ru.ykul.service.GroupService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/groups")
+@RequestMapping("/lms/groups")
 @RequiredArgsConstructor
 public class GroupController {
 

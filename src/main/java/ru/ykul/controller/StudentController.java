@@ -9,7 +9,7 @@ import ru.ykul.service.StudentService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/lms/students")
 @RequiredArgsConstructor
 public class StudentController {
 

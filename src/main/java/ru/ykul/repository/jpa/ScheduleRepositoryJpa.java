@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.ykul.model.Schedule;
+import ru.ykul.model.projection.ScheduleProjection;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ScheduleRepositoryJpa extends JpaRepository<Schedule,Integer> {
@@ -45,4 +47,17 @@ public interface ScheduleRepositoryJpa extends JpaRepository<Schedule,Integer> {
     @Query(value = "UPDATE schedule SET course_id = null " +
             "WHERE course_id = :course_id", nativeQuery = true)
     void deleteCourseId(@Param("course_id") Integer id);
+
+    @Query(value = "SELECT c.title AS courseTitle, s.start_date AS scheduleStartDate, " +
+            "st.firstname AS studentFirstName, st.lastname AS studentLastName, " +
+            "st.email AS studentEmail, t.firstname AS teacherFirstName, " +
+            "t.lastname AS teacherLastName, t.email AS teacherEmail " +
+            "FROM schedule s " +
+            "JOIN courses c ON s.course_id = c.id " +
+            "JOIN groups g ON s.group_id = g.id " +
+            "JOIN students st ON g.id = st.group_id " +
+            "JOIN teachers t ON s.teacher_id = t.id " +
+            "WHERE s.start_date < :timeInterval", nativeQuery = true)
+    List<ScheduleProjection> getScheduleForStudentsAndTeachers(@Param("timeInterval")
+                                                    LocalDateTime timeInterval);
 }

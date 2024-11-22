@@ -19,6 +19,8 @@ public class Student {
     private String firstName;
     @Column(name="lastname")
     private String lastName;
+    @Column(name="email")
+    private String email;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="group_id", referencedColumnName="id")
     Group group;

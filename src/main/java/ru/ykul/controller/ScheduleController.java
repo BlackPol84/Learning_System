@@ -9,7 +9,7 @@ import ru.ykul.service.ScheduleService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/schedule")
+@RequestMapping("/lms/schedule")
 @RequiredArgsConstructor
 public class ScheduleController {
 
