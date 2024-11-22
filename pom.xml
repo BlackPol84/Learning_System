@@ -14,23 +14,18 @@
 
   <properties>
     <java.version>17</java.version>
-    <spring.version>6.1.4</spring.version>
-    <jakarta.version>6.1.0-M1</jakarta.version>
     <lombok.version>1.18.30</lombok.version>
     <lombok.mapstruct.version>0.2.0</lombok.mapstruct.version>
     <mapstruct.version>1.5.5.Final</mapstruct.version>
     <maven-compiler.version>3.11.0</maven-compiler.version>
     <postgresql.version>42.7.2</postgresql.version>
-    <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
-    <snakeyaml.version>2.2</snakeyaml.version>
-    <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
     <liquibase.version>4.27.0</liquibase.version>
     <testcontainers.version>1.19.8</testcontainers.version>
+    <spring-cloud.version>2023.0.3</spring-cloud.version>
     <start-class>ru.ykul.LearningSystemApplication</start-class>
   </properties>
 
   <dependencies>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
@@ -55,6 +50,22 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka-test</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -95,8 +106,18 @@
       <version>${testcontainers.version}</version>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <finalName>LearningSystem_v2</finalName>

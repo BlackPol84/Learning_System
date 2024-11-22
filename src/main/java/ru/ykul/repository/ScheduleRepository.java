@@ -17,4 +17,5 @@ public interface ScheduleRepository {
     void deleteTeacher(int id);
     void deleteGroup(int id);
     void deleteCourse(int id);
+
 }

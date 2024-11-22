@@ -17,35 +17,35 @@ public class ExceptionController {
 
     @ResponseBody
     @ExceptionHandler(TeacherNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     String teacherNotFoundHandler(TeacherNotFoundException ex) {
         return ex.getMessage();
     }
 
     @ResponseBody
     @ExceptionHandler(CourseNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     String courseNotFoundHandler(CourseNotFoundException ex) {
         return ex.getMessage();
     }
 
     @ResponseBody
     @ExceptionHandler(GroupNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     String groupNotFoundHandler(GroupNotFoundException ex) {
         return ex.getMessage();
     }
 
     @ResponseBody
     @ExceptionHandler(StudentNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     String studentNotFoundHandler(StudentNotFoundException ex) {
         return ex.getMessage();
     }
 
     @ResponseBody
     @ExceptionHandler(ScheduleNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     String scheduleNotFoundHandler(ScheduleNotFoundException ex) {
         return ex.getMessage();
     }

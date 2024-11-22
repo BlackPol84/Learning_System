@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: dev-3-teachers
+      author: pol84
+      changes:
+        - addColumn:
+            tableName: teachers
+            columns:
+              - column:
+                  name: email
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: dev-3-students
+      author: pol84
+      changes:
+        - addColumn:
+            tableName: students
+            columns:
+              - column:
+                  name: email
+                  type: varchar(50)
+                  constraints:
+                    nullable: false

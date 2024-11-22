@@ -38,6 +38,7 @@ public class ScheduleMapper implements RowMapper<Schedule> {
             teacher.setId(rs.getInt("teacher_id"));
             teacher.setFirstName(rs.getString("firstname"));
             teacher.setLastName(rs.getString("lastname"));
+            teacher.setEmail(rs.getString("email"));
             schedule.setTeacher(teacher);
         }
 
