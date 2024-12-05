@@ -11,7 +11,8 @@ import java.util.List;
 
 public interface CourseRepositoryJpa extends JpaRepository<Course,Integer> {
 
-    @Query("SELECT c FROM Course c LEFT JOIN FETCH c.teacher")
+    @Query("SELECT c FROM Course c " +
+            "LEFT JOIN FETCH c.teacher")
     List<Course> getAllCourses();
 
     boolean existsByTitleAndTeacher(String title, Teacher teacher);

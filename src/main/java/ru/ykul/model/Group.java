@@ -3,6 +3,8 @@ package ru.ykul.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -20,4 +22,6 @@ public class Group {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="course_id", referencedColumnName="id")
     private Course course;
+    @OneToMany(mappedBy = "group")
+    private List<Student> students;
 }
