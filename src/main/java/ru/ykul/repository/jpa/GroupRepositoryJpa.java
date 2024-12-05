@@ -10,7 +10,8 @@ import java.util.List;
 
 public interface GroupRepositoryJpa extends JpaRepository<Group,Integer> {
 
-    @Query("SELECT g FROM Group g LEFT JOIN FETCH g.course c LEFT JOIN FETCH c.teacher")
+    @Query("SELECT g FROM Group g " +
+            "LEFT JOIN FETCH g.course c")
     List<Group> getAllGroups();
 
     boolean existsByName(String name);

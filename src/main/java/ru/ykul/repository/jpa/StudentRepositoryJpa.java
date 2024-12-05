@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface StudentRepositoryJpa extends JpaRepository<Student,Integer> {
 
-    @Query("SELECT s FROM Student s LEFT JOIN FETCH s.group g " +
-            "LEFT JOIN FETCH g.course c LEFT JOIN FETCH c.teacher")
+    @Query("SELECT s FROM Student s " +
+            "LEFT JOIN FETCH s.group g")
     List<Student> getAllStudents();
 
     boolean existsByFirstNameAndLastNameAndGroupName(String firstName,
